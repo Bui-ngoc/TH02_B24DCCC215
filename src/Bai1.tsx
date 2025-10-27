@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// Kiểu dữ liệu cho thông tin thời tiết hiện tại lấy từ API wttr.in
 type WeatherInfo = {
   temperatureCelsius?: string;
   description?: string;
 };
 
 export default function Bai1() {
-  // Tên thành phố do người dùng nhập
   const [cityName, setCityName] = useState('Hanoi');
-  // Trạng thái tải dữ liệu
   const [isLoading, setIsLoading] = useState(false);
-  // Lưu lỗi (nếu có)
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  // Dữ liệu thời tiết sau khi fetch
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null);
 
-  /**
-   * Lấy dữ liệu thời tiết từ wttr.in theo tên thành phố.
-   * API trả về JSON, phần hiện tại nằm trong `current_condition[0]`.
-   */
+  
   const fetchWeatherForCity = async () => {
     setIsLoading(true);
     setErrorMessage(null);
@@ -30,7 +22,6 @@ export default function Bai1() {
       const response = await axios.get(requestUrl);
       const responseData = response.data;
 
-      // Giải nén phần current_condition[0]
       const currentCondition = responseData?.current_condition?.[0];
 
       const weatherData: WeatherInfo = {
@@ -40,7 +31,6 @@ export default function Bai1() {
 
       setWeatherInfo(weatherData);
     } catch (error: any) {
-      // Hiển thị message rõ ràng
       setErrorMessage(error?.message || 'Lỗi khi lấy dữ liệu thời tiết');
     } finally {
       setIsLoading(false);

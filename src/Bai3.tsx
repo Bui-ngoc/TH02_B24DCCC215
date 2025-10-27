@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// Kiểu dữ liệu cho một bài báo từ Spaceflight News API
 type NewsArticle = {
   id: number;
   title: string;
@@ -21,7 +20,6 @@ export default function Bai3() {
     axios
       .get('https://api.spaceflightnewsapi.net/v4/articles?limit=10')
       .then((response) => {
-        // Một số endpoint trả về { results: [...] } hoặc trả về mảng trực tiếp
         const data = response.data;
         const list = data.results || data;
         setNewsArticles(list);
@@ -39,7 +37,6 @@ export default function Bai3() {
         {newsArticles.map((article) => (
           <div key={article.id} style={{ border: '1px solid #ddd', padding: 8 }}>
             {article.imageUrl && (
-              // Một số bài có trường imageUrl
               <img src={article.imageUrl} alt={article.title} style={{ maxWidth: '100%' }} />
             )}
             <h4>{article.title}</h4>
